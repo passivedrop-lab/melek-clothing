@@ -5,82 +5,78 @@ import Link from 'next/link'
 import { Package, Tag, Eye, TrendingUp, History } from 'lucide-react'
 
 const STATS = [
-    { name: 'Total Produits', value: '124', icon: Package, color: 'text-blue-400' },
-    { name: 'Catégories', value: '5', icon: Tag, color: 'text-purple-400' },
-    { name: 'Vues Site', value: '1.2k', icon: Eye, color: 'text-accent' },
-    { name: 'Conversion', value: '12%', icon: TrendingUp, color: 'text-green-400' },
+    { label: 'Total Produits', value: '124', icon: Package, trend: '+12%' },
+    { label: 'Catégories', value: '5', icon: Tag, trend: 'stable' },
+    { label: 'Vues Site', value: '1.2k', icon: Eye, trend: '+45%' },
+    { label: 'Taux Conv.', value: '3.2%', icon: TrendingUp, trend: '+0.4%' },
 ]
 
-const RECENT_ACTIVITIES = [
-    { id: 1, action: 'Produit Ajouté', target: 'Veste Vintage en Cuir', admin: 'Deo', time: 'Il y a 2h' },
-    { id: 2, action: 'Prix Modifié', target: 'Robe en Soie Italienne', admin: 'Admin Mel', time: 'Il y a 5h' },
-    { id: 3, action: 'Nouvelle Catégorie', target: 'Jeans', admin: 'Deo', time: 'Hier' },
+const ACTIVITIES = [
+    { id: 1, admin: 'Deo', action: 'Ajout Produit', target: 'Veste Cuir', date: 'Il y a 2h' },
+    { id: 2, admin: 'Admin Mel', action: 'Modif Prix', target: 'Robe Soie', date: 'Il y a 5h' },
+    { id: 3, admin: 'Deo', action: 'Nouv. Cat.', target: 'Accessoires', date: 'Hier' },
 ]
 
-export default function DashboardPage() {
+export default function AdminDashboard() {
     return (
-        <div className="space-y-12">
-            <header>
-                <h1 className="text-3xl font-serif mb-2">Bienvenue sur le Dashboard</h1>
-                <p className="text-xs uppercase tracking-widest text-muted">Aperçu global de votre activité</p>
+        <div>
+            <header style={{ marginBottom: '5rem' }}>
+                <h1 style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>Vue d'Ensemble</h1>
+                <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.4em', color: 'var(--accent)' }}>
+                    Centre de Contrôle Melek Héritage
+                </p>
             </header>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {STATS.map((stat, index) => (
-                    <motion.div
-                        key={stat.name}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-secondary p-8 border border-white/5 group hover:border-accent/30 transition-all"
-                    >
-                        <div className="flex justify-between items-start mb-4">
-                            <stat.icon size={20} className={stat.color} />
-                            <span className="text-[10px] text-green-400 font-bold">+5%</span>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginBottom: '6rem' }}>
+                {STATS.map((stat) => (
+                    <div key={stat.label} style={{ background: '#0a0a0a', border: '1px solid var(--border)', padding: '2rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                            <stat.icon size={20} style={{ color: 'var(--accent)' }} strokeWidth={1} />
+                            <span style={{ fontSize: '0.6rem', color: '#00ff00' }}>{stat.trend}</span>
                         </div>
-                        <p className="text-[10px] uppercase tracking-widest text-muted mb-1">{stat.name}</p>
-                        <h3 className="text-2xl font-serif">{stat.value}</h3>
-                    </motion.div>
+                        <p style={{ fontSize: '2rem', fontFamily: 'Bodoni Moda', marginBottom: '0.5rem' }}>{stat.value}</p>
+                        <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.5 }}>{stat.label}</p>
+                    </div>
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Recent Activity */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="flex items-center gap-3 mb-6">
-                        <History size={18} className="text-accent" />
-                        <h2 className="text-xs uppercase tracking-[0.2em] font-bold">Activités Récentes</h2>
-                    </div>
-                    <div className="bg-secondary/30 border border-white/5">
-                        {RECENT_ACTIVITIES.map((activity) => (
-                            <div key={activity.id} className="flex items-center justify-between p-6 border-b border-white/5 last:border-0 hover:bg-white/5 transition-all">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-2 h-2 rounded-full bg-accent" />
-                                    <div>
-                                        <p className="text-xs font-bold uppercase tracking-widest">{activity.action}</p>
-                                        <p className="text-[10px] text-muted">{activity.target}</p>
-                                    </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem' }}>
+                {/* Recent Activities */}
+                <div>
+                    <h2 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '2.5rem', fontWeight: 'bold' }}>
+                        Traces Récentes
+                    </h2>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        {ACTIVITIES.map((log) => (
+                            <div key={log.id} style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', paddingBottom: '1.5rem', borderBottom: '1px solid var(--border)' }}>
+                                <div style={{ width: '40px', height: '40px', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <History size={16} style={{ color: 'var(--accent)' }} strokeWidth={1} />
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-[10px] font-bold uppercase tracking-widest">{activity.admin}</p>
-                                    <p className="text-[10px] text-muted">{activity.time}</p>
+                                <div style={{ flex: 1 }}>
+                                    <p style={{ fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.2rem' }}>{log.action}: {log.target}</p>
+                                    <p style={{ fontSize: '0.6rem', opacity: 0.4 }}>{log.admin} • {log.date}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <button className="text-[10px] uppercase tracking-widest text-accent hover:text-white transition-colors">
+                    <Link href="/admin/activites" style={{ display: 'inline-block', marginTop: '2rem', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.6 }}>
                         Voir tout l'historique
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="space-y-6">
-                    <h2 className="text-xs uppercase tracking-[0.2em] font-bold">Actions Rapides</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        <Link href="/admin/produits/nouveau" className="btn-premium w-full">Ajouter un produit</Link>
-                        <Link href="/admin/categories" className="btn-outline w-full text-center">Gérer les catégories</Link>
-                        <Link href="/" target="_blank" className="text-center text-[10px] uppercase tracking-widest mt-4 text-muted hover:text-white transition-colors">Voir le site en direct</Link>
+                <div style={{ background: 'var(--accent)', padding: '3rem', color: 'white' }}>
+                    <h2 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '2.5rem', fontWeight: 'bold' }}>
+                        Actions Rapides
+                    </h2>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <Link href="/admin/produits/nouveau" style={{ background: 'white', color: 'black', padding: '1.5rem', textAlign: 'center', fontSize: '0.7rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                            Ajouter un produit
+                        </Link>
+                        <Link href="/admin/categories" style={{ border: '1px solid white', color: 'white', padding: '1.5rem', textAlign: 'center', fontSize: '0.7rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                            Gérer les catégories
+                        </Link>
                     </div>
                 </div>
             </div>
