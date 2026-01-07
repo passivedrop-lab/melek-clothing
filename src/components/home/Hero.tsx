@@ -39,11 +39,11 @@ export default function Hero() {
                 </motion.div>
             </div>
 
-            <div style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', z- index: 10 }}>
-            <p style={{ fontSize: '0.6rem', letterSpacing: '0.8em', textTransform: 'uppercase', opacity: 0.4 }}>
-                Scroll pour découvrir
-            </p>
-        </div>
-    </div >
-  )
+            <div style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}>
+                <p style={{ fontSize: '0.6rem', letterSpacing: '0.8em', textTransform: 'uppercase', opacity: 0.4 }}>
+                    Scroll pour découvrir
+                </p>
+            </div>
+        </div >
+    )
 }

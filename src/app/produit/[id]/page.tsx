@@ -64,7 +64,7 @@ export default function ProductPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '5rem' }}>
                     {/* Visuals */}
                     <div>
-                        <div style={{ aspectHeight: '4/5', background: '#111', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                        <div style={{ aspectRatio: '4/5', background: '#111', overflow: 'hidden', marginBottom: '1.5rem' }}>
                             <img
                                 src={[product.image_url, ...(product.gallery || [])][activeImage]}
                                 alt={product.name}
