@@ -51,7 +51,7 @@ export default function BoutiquePage() {
                         <div style={{ height: '1px', width: '100px', background: 'var(--accent)', margin: '0 auto 4rem' }}></div>
 
                         <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.4em', opacity: 0.8, maxWidth: '400px', margin: '0 auto' }}>
-                            Nos curateurs finalisent l'acquisition de pièces d'exception à Cotonou et Paris. Revenez sous peu pour l'ouverture de la Galerie.
+                            Nos curateurs finalisent l'acquisition de pièces d'exception à Cotonou. Livraison disponible partout au Bénin.
                         </p>
                     </div>
                 </div>
