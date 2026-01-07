@@ -757,7 +757,12 @@ section {
   .lg\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
+
 
 @media (min-width: 1280px) {
   .xl\:block {
@@ -780,4 +785,56 @@ section {
 
 .shadow-2xl {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.rotate-45 {
+  transform: rotate(45deg);
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.origin-right {
+  transform-origin: right;
+}
+
+.-skew-x-12 {
+  transform: skewX(-12deg);
+}
+
+.translate-x-1\/2 {
+  transform: translateX(50%);
+}
+
+.translate-x-4 {
+  transform: translateX(1rem);
+}
+
+.translate-y-4 {
+  transform: translateY(1rem);
+}
+
+.group:hover .group-hover\:translate-x-1 {
+  transform: translateX(0.25rem);
+}
+
+.group:hover .group-hover\:translate-x-2 {
+  transform: translateX(0.5rem);
+}
+
+.group:hover .group-hover\:translate-y-2 {
+  transform: translateY(0.5rem);
+}
+
+.group:hover .group-hover\:scale-100 {
+  transform: scale(1);
+}
+
+.scale-110 {
+  transform: scale(1.1);
+}
+
+.group-hover\:-translate-x-2:hover {
+  transform: translateX(-0.5rem);
 }
