@@ -31,7 +31,7 @@ export default function CartSheet({ isOpen, onClose }: { isOpen: boolean, onClos
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/80 z-[60] backdrop-blur-md"
+                        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 110, backdropFilter: 'blur(5px)' }}
                     />
 
                     <motion.div
@@ -39,69 +39,71 @@ export default function CartSheet({ isOpen, onClose }: { isOpen: boolean, onClos
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 30, stiffness: 200 }}
-                        className="fixed top-0 right-0 bottom-0 w-full max-w-xl bg-background z-[70] flex flex-col shadow-2xl border-l border-white/5"
+                        style={{
+                            position: 'fixed', top: 0, right: 0, bottom: 0,
+                            width: '100%', maxWidth: '500px', background: '#050505',
+                            zIndex: 120, display: 'flex', flexDirection: 'column',
+                            borderLeft: '1px solid var(--border)', boxShadow: '-20px 0 50px rgba(0,0,0,0.5)'
+                        }}
                     >
-                        <div className="p-10 border-b border-white/5 flex justify-between items-center">
-                            <div className="flex items-center gap-6">
-                                <ShoppingBag size={20} className="text-accent" strokeWidth={1} />
-                                <h2 className="text-xs-caps font-bold">La Sélection ({totalItems})</h2>
+                        <div style={{ padding: '3rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <ShoppingBag size={20} style={{ color: 'var(--accent)' }} />
+                                <h2 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.4em' }}>
+                                    Le Panier ({totalItems})
+                                </h2>
                             </div>
-                            <button onClick={onClose} className="hover:text-accent transition-colors">
-                                <X size={24} strokeWidth={1} />
+                            <button onClick={onClose} style={{ opacity: 0.6 }} className="hover:opacity-100 transition-opacity">
+                                <X size={24} />
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto p-10 space-y-12">
+                        <div style={{ flex: 1, overflowY: 'auto', padding: '3rem' }}>
                             {items.length === 0 ? (
-                                <div className="h-full flex flex-col items-center justify-center text-center opacity-30">
-                                    <div className="w-20 h-20 border border-white/10 rotate-45 flex items-center justify-center mb-10">
-                                        <ShoppingBag size={32} strokeWidth={1} className="-rotate-45" />
-                                    </div>
-                                    <p className="text-xs-caps italic">L'écrin est vide</p>
+                                <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: 0.3 }}>
+                                    <ShoppingBag size={48} strokeWidth={1} style={{ marginBottom: '2rem' }} />
+                                    <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.3em' }}>Votre écrin est vide</p>
                                 </div>
                             ) : (
-                                items.map((item) => (
-                                    <div key={`${item.id}-${item.size}`} className="flex gap-8 group">
-                                        <div className="w-24 aspect-[3/4] bg-secondary flex-shrink-0 overflow-hidden">
-                                            <img src={item.image_url} alt={item.name} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
-                                        </div>
-                                        <div className="flex-1 flex flex-col justify-between py-2">
-                                            <div>
-                                                <h4 className="text-sm font-light uppercase tracking-widest mb-2">{item.name}</h4>
-                                                <p className="text-[10px] text-accent uppercase tracking-[0.2em] font-bold">Mesure: {item.size} • Qté: {item.quantity}</p>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+                                    {items.map((item) => (
+                                        <div key={`${item.id}-${item.size}`} style={{ display: 'flex', gap: '2rem' }}>
+                                            <div style={{ width: '80px', aspectRatio: '3/4', background: '#111', overflow: 'hidden', flexShrink: 0 }}>
+                                                <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             </div>
-                                            <div className="flex justify-between items-end">
-                                                <p className="text-sm font-serif italic text-white/90">{formatPrice(item.price * item.quantity)}</p>
-                                                <button
-                                                    onClick={() => removeFromCart(item.id, item.size)}
-                                                    className="text-muted hover:text-white transition-colors pb-1 border-b border-transparent hover:border-white"
-                                                >
-                                                    <span className="text-[8px] uppercase tracking-widest">Retirer</span>
-                                                </button>
+                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                <div>
+                                                    <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>{item.name}</h4>
+                                                    <p style={{ fontSize: '0.6rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.2em' }}>
+                                                        Taille: {item.size} • Qté: {item.quantity}
+                                                    </p>
+                                                </div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <p style={{ fontSize: '1rem', fontFamily: 'Bodoni Moda', fontStyle: 'italic' }}>{formatPrice(item.price * item.quantity)}</p>
+                                                    <button onClick={() => removeFromCart(item.id, item.size)} style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.4 }} className="hover:opacity-100 hover:text-red-400 transition-all">
+                                                        Retirer
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))
+                                    ))}
+                                </div>
                             )}
                         </div>
 
                         {items.length > 0 && (
-                            <div className="p-10 border-t border-white/5 bg-secondary/20">
-                                <div className="flex justify-between items-baseline mb-10">
-                                    <span className="text-xs-caps text-muted">Investissement Total</span>
-                                    <span className="text-3xl font-serif italic text-accent">{formatPrice(totalPrice)}</span>
+                            <div style={{ padding: '3rem', borderTop: '1px solid var(--border)', background: '#080808' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+                                    <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.6 }}>Total</span>
+                                    <span style={{ fontSize: '1.8rem', fontFamily: 'Bodoni Moda', fontStyle: 'italic', color: 'var(--accent)' }}>{formatPrice(totalPrice)}</span>
                                 </div>
                                 <button
                                     onClick={handleCheckout}
-                                    className="btn-melek w-full py-6 text-[10px]"
+                                    className="btn-primary"
+                                    style={{ width: '100%', padding: '1.8rem' }}
                                 >
-                                    <span>Confirmer l'Acquisition (WhatsApp)</span>
+                                    Passer la commande (WhatsApp)
                                 </button>
-                                <div className="flex justify-center gap-4 mt-8 opacity-40">
-                                    <p className="text-[7px] uppercase tracking-[0.4em]">Melek</p>
-                                    <div className="w-1 h-1 bg-accent rotate-45" />
-                                    <p className="text-[7px] uppercase tracking-[0.4em]">Heritage</p>
-                                </div>
                             </div>
                         )}
                     </motion.div>

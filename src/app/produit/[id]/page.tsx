@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 import { motion } from 'framer-motion'
-import { ArrowLeft, ShoppingBag, ShieldCheck, ChevronRight } from 'lucide-react'
+import { ArrowLeft, ShoppingBag, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 import confetti from 'canvas-confetti'
 
@@ -21,7 +21,7 @@ export default function ProductPage() {
 
     const product = PRODUCT_DATA[id as string]
 
-    if (!product) return <div className="pt-40 text-center font-serif italic">Cette pièce s'est évaporée...</div>
+    if (!product) return <div style={{ textAlign: 'center', padding: '10rem 0', fontStyle: 'italic' }}>Cette pièce s'est évaporée...</div>
 
     const formatPrice = (p: number) => {
         return new Intl.NumberFormat('fr-BJ', {
@@ -54,63 +54,66 @@ export default function ProductPage() {
     }
 
     return (
-        <div className="pt-40 pb-40 bg-melek">
+        <div style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
             <div className="container">
-                <Link href="/boutique" className="inline-flex items-center gap-4 text-xs-caps text-muted hover:text-white mb-20 transition-colors group">
-                    <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                <Link href="/boutique" style={{ display: 'inline-flex', alignItems: 'center', gap: '1rem', marginBottom: '4rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.6 }}>
+                    <ArrowLeft size={16} />
                     Retour au catalogue
                 </Link>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-32">
-                    {/* Visual Presentation */}
-                    <div className="space-y-10">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1.2 }}
-                            className="aspect-[3/4] bg-secondary overflow-hidden shadow-2xl"
-                        >
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '5rem' }}>
+                    {/* Visuals */}
+                    <div>
+                        <div style={{ aspectHeight: '4/5', background: '#111', overflow: 'hidden', marginBottom: '1.5rem' }}>
                             <img
                                 src={[product.image_url, ...(product.gallery || [])][activeImage]}
                                 alt={product.name}
-                                className="w-full h-full object-cover"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
-                        </motion.div>
-                        <div className="flex gap-4">
+                        </div>
+                        <div style={{ display: 'flex', gap: '1rem' }}>
                             {[product.image_url, ...(product.gallery || [])].map((img, i) => (
                                 <button
                                     key={i}
-                                    className={`w-24 aspect-[3/4] bg-secondary border transition-all grayscale opacity-50 hover:opacity-100 ${activeImage === i ? 'border-accent opacity-100 grayscale-0' : 'border-transparent'}`}
+                                    style={{ width: '80px', height: '100px', opacity: activeImage === i ? 1 : 0.4, transition: '0.3s' }}
                                     onClick={() => setActiveImage(i)}
                                 >
-                                    <img src={img} alt="" className="w-full h-full object-cover" />
+                                    <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', border: activeImage === i ? '1px solid var(--accent)' : 'none' }} />
                                 </button>
                             ))}
                         </div>
                     </div>
 
-                    {/* Editorial Content */}
-                    <div className="flex flex-col">
-                        <header className="mb-12">
-                            <p className="text-xs-caps text-accent mb-6">Pièces de Distinction</p>
-                            <h1 className="text-5xl md:text-7xl mb-6">{product.name}</h1>
-                            <p className="text-3xl font-serif italic text-white/80">{formatPrice(product.price)}</p>
-                        </header>
+                    {/* Content */}
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span style={{ color: 'var(--accent)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.3em', marginBottom: '1rem' }}>
+                            {product.category}
+                        </span>
+                        <h1 style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>{product.name}</h1>
+                        <p style={{ fontSize: '2rem', fontFamily: 'Bodoni Moda', fontStyle: 'italic', marginBottom: '3rem', opacity: 0.8 }}>
+                            {formatPrice(product.price)}
+                        </p>
 
-                        <div className="mb-16 text-muted leading-loose font-light tracking-wide first-letter:text-4xl first-letter:font-serif first-letter:mr-2">
+                        <div style={{ marginBottom: '4rem', opacity: 0.7, lineHeight: '1.8', fontSize: '1rem' }}>
                             <p>{product.description}</p>
                         </div>
 
-                        {/* Selection */}
-                        <div className="mb-16">
-                            <h3 className="text-xs-caps mb-8 font-bold">Sélection de la mesure</h3>
-                            <div className="flex flex-wrap gap-4">
+                        <div style={{ marginBottom: '4rem' }}>
+                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.25em', marginBottom: '1.5rem', fontWeight: 'bold' }}>
+                                Mesure du vêtement
+                            </p>
+                            <div style={{ display: 'flex', gap: '1rem' }}>
                                 {product.sizes.map((size: string) => (
                                     <button
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
-                                        className={`w-16 h-16 flex items-center justify-center border transition-all text-xs font-bold ${selectedSize === size ? 'bg-white text-black border-white' : 'border-white/10 hover:border-white/30'
-                                            }`}
+                                        style={{
+                                            width: '60px', height: '60px', border: '1px solid',
+                                            borderColor: selectedSize === size ? 'white' : 'var(--border)',
+                                            background: selectedSize === size ? 'white' : 'transparent',
+                                            color: selectedSize === size ? 'black' : 'white',
+                                            fontSize: '0.8rem', fontWeight: 'bold', transition: '0.3s'
+                                        }}
                                     >
                                         {size}
                                     </button>
@@ -120,20 +123,17 @@ export default function ProductPage() {
 
                         <button
                             onClick={handleAddToCart}
-                            className="btn-melek w-full py-6 text-xs mb-12 flex items-center justify-center gap-4"
+                            className="btn-primary"
+                            style={{ padding: '2rem', marginBottom: '3rem', width: '100%' }}
                         >
-                            <ShoppingBag size={18} strokeWidth={1} />
-                            <span>Acquérir cette pièce</span>
+                            <ShoppingBag size={20} style={{ marginRight: '1rem' }} />
+                            Acquérir cette pièce
                         </button>
 
-                        <div className="space-y-6 pt-12 border-t border-white/5">
-                            <div className="flex items-center gap-4 group">
+                        <div style={{ borderTop: '1px solid var(--border)', paddingTop: '3rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', opacity: 0.6 }}>
                                 <ShieldCheck size={20} className="text-accent" />
-                                <p className="text-xs-caps text-muted group-hover:text-white transition-colors">Certification d'Authénticité Melek</p>
-                            </div>
-                            <div className="flex items-center gap-4 group">
-                                <ChevronRight size={20} className="text-accent" />
-                                <p className="text-xs-caps text-muted group-hover:text-white transition-colors">Expédition sécurisée sous 24h</p>
+                                <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Authénticité Garantie Melek</span>
                             </div>
                         </div>
                     </div>

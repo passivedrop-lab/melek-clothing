@@ -27,63 +27,72 @@ export default function BoutiquePage() {
     })
 
     return (
-        <div className="pt-48 pb-40 min-h-screen bg-melek">
+        <div style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
             <div className="container">
-                <header className="mb-32 text-center lg:text-left">
+                <header style={{ textAlign: 'center', marginBottom: '8rem' }}>
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1 }}
                     >
-                        <h1 className="text-6xl md:text-[8rem] leading-none mb-8">La Curathèque.</h1>
-                        <p className="text-xs-caps text-muted">Exploration esthétique de pièces uniques.</p>
+                        <h1 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', marginBottom: '1.5rem' }}>La Curathèque.</h1>
+                        <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.4em', color: 'var(--accent)' }}>
+                            Exploration esthétique de pièces uniques.
+                        </p>
                     </motion.div>
                 </header>
 
-                {/* Filters & Search - Minimal Edition */}
-                <div className="flex flex-col lg:flex-row justify-between items-center gap-10 mb-20 pb-10 border-b border-white/5">
-                    <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
+                {/* Filters & Search */}
+                <div style={{
+                    display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
+                    alignItems: 'center', gap: '2rem', marginBottom: '5rem',
+                    paddingBottom: '2rem', borderBottom: '1px solid var(--border)'
+                }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
                         {CATEGORIES.map((cat) => (
                             <button
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
-                                className={`text-xs-caps transition-all pb-2 border-b-2 ${selectedCategory === cat ? 'border-accent text-white' : 'border-transparent text-muted hover:text-white'
-                                    }`}
+                                style={{
+                                    fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.2em',
+                                    paddingBottom: '0.5rem', borderBottom: '2px solid',
+                                    borderColor: selectedCategory === cat ? 'var(--accent)' : 'transparent',
+                                    color: selectedCategory === cat ? 'white' : 'var(--muted)',
+                                    transition: 'all 0.3s ease'
+                                }}
                             >
                                 {cat}
                             </button>
                         ))}
                     </div>
 
-                    <div className="relative w-full lg:w-80">
-                        <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted" />
+                    <div style={{ position: 'relative', width: '300px' }}>
+                        <Search size={14} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', opacity: 0.3 }} />
                         <input
                             type="text"
-                            placeholder="QUÊTE D'UNE PIÈCE..."
+                            placeholder="RECHERCHER..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-transparent border-b border-white/10 px-0 py-4 text-xs tracking-widest uppercase focus:border-accent outline-none transition-colors"
+                            style={{
+                                width: '100%', background: 'none', border: 'none',
+                                borderBottom: '1px solid var(--border)', padding: '1rem 0',
+                                color: 'white', fontSize: '0.7rem', letterSpacing: '0.25em',
+                                outline: 'none'
+                            }}
                         />
                     </div>
                 </div>
 
-                {/* Product Grid - Wide Spacing */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-24">
-                    {filteredProducts.map((product, index) => (
-                        <motion.div
-                            key={product.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: index * 0.05 }}
-                        >
-                            <ProductCard product={product} />
-                        </motion.div>
+                {/* Product Grid */}
+                <div className="product-grid">
+                    {filteredProducts.map((product) => (
+                        <ProductCard key={product.id} product={product} />
                     ))}
                 </div>
 
                 {filteredProducts.length === 0 && (
-                    <div className="py-40 text-center text-muted italic">
-                        <p className="text-sm">L'exception que vous cherchez n'est pas encore ici.</p>
+                    <div style={{ textAlign: 'center', padding: '10rem 0', opacity: 0.4, fontStyle: 'italic' }}>
+                        L'exception que vous cherchez n'est pas encore ici.
                     </div>
                 )}
             </div>
