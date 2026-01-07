@@ -19,7 +19,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.2, ease: "easeOut" }}
                 >
-                    <span className="hero-subtitle">Maison Melek — Heritage 2026</span>
+                    <span className="hero-subtitle">Melek Clothing — Heritage 2026</span>
                     <h1 className="hero-title">
                         L'Élégance <br />
                         <span className="serif-italic" style={{ color: 'var(--accent)', marginLeft: '1rem' }}>Souveraine</span>
