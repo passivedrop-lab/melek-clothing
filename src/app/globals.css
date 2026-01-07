@@ -1,20 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Montserrat:wght@100..900&display=swap');
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --accent: #D4AF37; /* Gold for premium touch */
-  --secondary: #1a1a1a;
-  --muted: #888888;
-  --card: #0a0a0a;
-  --radius: 0px; /* Sharp, elegant borders */
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --background: #050505;
+  /* Deeper, more luxurious black */
+  --foreground: #fcfcfc;
+  /* Off-white for comfort and class */
+  --accent: #B8860B;
+  /* Dark Goldenrod - more sophisticated gold */
+  --secondary: #0a0a0a;
+  --muted: #666666;
+  --border: rgba(255, 255, 255, 0.08);
+  /* Finer borders */
+  --transition-fast: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-slow: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  --section-padding: 10rem;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  cursor: crosshair;
+  /* Aesthetic choice for luxury sites */
 }
 
 html,
@@ -23,147 +30,172 @@ body {
   overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, .font-serif {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+h1,
+h2,
+h3,
+h4,
+.font-serif {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
 }
 
-/* Premium Background Pattern */
-.bg-geometric {
-  background-color: #000000;
-  background-image: 
-    linear-gradient(45deg, #111 25%, transparent 25%),
-    linear-gradient(-45deg, #111 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #111 75%),
-    linear-gradient(-45deg, transparent 75%, #111 75%);
-  background-size: 40px 40px;
-  background-position: 0 0, 0 20px, 20px 20px, 20px 0;
+/* Luxury Background */
+.bg-melek {
+  background: radial-gradient(circle at 50% -20%, #1a1a1a 0%, #050505 80%);
 }
 
-/* Glassmorphism */
+/* Geometric Overlay (Subtle) */
+.geometric-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 100px 100px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Glassmorphism 2.0 */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--border);
 }
 
-.glass-dark {
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* Custom Typography Utilities */
+.tracking-ultra {
+  letter-spacing: 0.4em;
 }
 
-/* Premium Button */
-.btn-premium {
-  padding: 12px 24px;
+.text-xs-caps {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 600;
+}
+
+/* Premium Button Redesign */
+.btn-melek {
+  position: relative;
+  padding: 20px 48px;
   background: var(--foreground);
   color: var(--background);
   border: none;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  transition: var(--transition-fast);
+  overflow: hidden;
 }
 
-.btn-premium:hover {
+.btn-melek::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
   background: var(--accent);
-  color: var(--background);
-  transform: translateY(-2px);
+  transition: var(--transition-fast);
+  z-index: 0;
 }
 
-.btn-outline {
-  padding: 12px 24px;
+.btn-melek:hover::before {
+  left: 0;
+}
+
+.btn-melek span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-melek-outline {
+  padding: 20px 48px;
   background: transparent;
   color: var(--foreground);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border);
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: var(--transition);
+  letter-spacing: 0.2em;
+  transition: var(--transition-fast);
 }
 
-.btn-outline:hover {
+.btn-melek-outline:hover {
+  background: var(--foreground);
+  color: var(--background);
   border-color: var(--foreground);
 }
 
-/* Product Card */
-.product-card {
+/* Product Card Redesign */
+.card-melek {
   position: relative;
-  overflow: hidden;
-  transition: var(--transition);
+  background: transparent;
+  width: 100%;
 }
 
-.product-card .image-container {
+.card-melek-image {
+  position: relative;
   aspect-ratio: 3/4;
   overflow: hidden;
-  background: var(--secondary);
+  background: #111;
+  margin-bottom: 24px;
 }
 
-.product-card img {
+.card-melek-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition);
+  filter: grayscale(20%);
+  transition: var(--transition-slow);
 }
 
-.product-card:hover img {
+.card-melek:hover .card-melek-image img {
   transform: scale(1.05);
+  filter: grayscale(0%);
 }
 
-.product-card .info {
-  padding: 16px 0;
+/* Sections */
+section {
+  padding: var(--section-padding) 0;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade {
-  animation: fadeIn 0.8s ease forwards;
-}
-
-/* Utilities */
 .container {
-  max-width: 1440px;
+  max-width: 1600px;
+  /* Wider for luxury feel */
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 4rem;
 }
 
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.gap-4 { gap: 1rem; }
-.gap-8 { gap: 2rem; }
-.grid { display: grid; }
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+/* Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: var(--transition-slow);
+}
 
-@media (max-width: 1024px) {
-  .grid-cols-4 { grid-template-columns: repeat(3, 1fr); }
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (max-width: 768px) {
-  .grid-cols-4, .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
-}
+  :root {
+    --section-padding: 6rem;
+  }
 
-@media (max-width: 480px) {
-  .grid-cols-2 { grid-template-columns: 1fr; }
+  .container {
+    padding: 0 1.5rem;
+  }
 }

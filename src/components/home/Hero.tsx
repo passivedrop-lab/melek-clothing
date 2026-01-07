@@ -2,64 +2,74 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 export default function Hero() {
     return (
-        <section className="relative h-screen flex items-center overflow-hidden bg-geometric">
-            {/* Overlay for readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background z-0" />
+        <section className="relative min-h-screen flex items-center overflow-hidden bg-melek pt-0 pb-0">
+            <div className="geometric-overlay" />
 
-            <div className="container relative z-10">
-                <div className="max-w-3xl">
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                    >
-                        <h2 className="text-accent uppercase tracking-[0.3em] text-sm font-bold mb-6">L'art de la friperie</h2>
-                        <h1 className="text-5xl md:text-8xl mb-8 leading-tight">
-                            Élégance <br />
-                            <span className="italic font-light">Sans Compromis</span>
-                        </h1>
-                    </motion.div>
-
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                        className="text-lg text-muted mb-10 max-w-xl leading-relaxed"
-                    >
-                        Une collection curatée de pièces uniques pour ceux qui exigent la distinction.
-                        Redéfinissez votre style avec nos trésors intemporels.
-                    </motion.p>
-
+            <div className="container relative z-10 flex flex-col lg:flex-row items-center gap-20">
+                {/* Text Content */}
+                <div className="flex-1 lg:max-w-2xl text-center lg:text-left mt-20 lg:mt-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.8 }}
-                        className="flex flex-wrap gap-6"
+                        transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
                     >
-                        <Link href="/boutique" className="btn-premium">
-                            Découvrir la collection
-                            <ArrowRight size={16} />
-                        </Link>
-                        <Link href="/boutique?cat=nouveautes" className="btn-outline">
-                            Nouveautés
-                        </Link>
+                        <p className="text-xs-caps text-accent mb-8 reveal active">Exclusivité & Héritage</p>
+                        <h1 className="text-6xl md:text-[9rem] leading-[0.9] mb-12 tracking-tight">
+                            Subjuguer <br />
+                            <span className="italic font-light ml-0 lg:ml-20">L'Instant</span>
+                        </h1>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.5, delay: 0.5 }}
+                        className="flex flex-col md:flex-row items-center lg:items-start gap-10"
+                    >
+                        <p className="text-sm text-muted max-w-sm leading-relaxed font-light tracking-wide italic">
+                            "La mode se démode, le style jamais." — Coco Chanel.
+                            <br />Redéfinissez votre distinction.
+                        </p>
+                        <div className="flex flex-col gap-4">
+                            <Link href="/boutique" className="btn-melek">
+                                <span>Explorer la collection</span>
+                            </Link>
+                            <Link href="/boutique?cat=nouveautes" className="text-xs-caps border-b border-accent pb-1 inline-block w-fit opacity-70 hover:opacity-100 transition-opacity">
+                                Nouvelle Curations
+                            </Link>
+                        </div>
                     </motion.div>
                 </div>
+
+                {/* Hero Image / Composition */}
+                <motion.div
+                    initial={{ opacity: 0, x: 100, rotate: 2 }}
+                    animate={{ opacity: 1, x: 0, rotate: 0 }}
+                    transition={{ duration: 1.8, ease: [0.25, 1, 0.5, 1] }}
+                    className="flex-1 relative w-full aspect-[4/5] lg:aspect-[3/4] max-w-xl group"
+                >
+                    <div className="absolute -inset-4 border border-accent/20 translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-1000" />
+                    <div className="relative w-full h-full overflow-hidden shadow-2xl">
+                        <img
+                            src="/hero-prestige.png"
+                            alt="Melek Luxury Fashion"
+                            className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-[3s] ease-out"
+                        />
+                    </div>
+                    {/* Geometric Motif */}
+                    <div className="absolute -bottom-10 -left-10 w-40 h-40 border border-white/5 rotate-45 pointer-events-none" />
+                </motion.div>
             </div>
 
-            {/* Background Graphic elements */}
-            <motion.div
-                animate={{
-                    rotate: [0, 90, 180, 270, 360],
-                }}
-                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                className="absolute -right-20 top-1/4 w-96 h-96 border border-white/5 pointer-events-none hidden lg:block"
-                style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
-            />
+            {/* Side Label */}
+            <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block">
+                <p className="text-[10px] uppercase tracking-[1em] rotate-90 origin-right text-muted/30">
+                    MELEK CLOTHING — EST. 2026
+                </p>
+            </div>
         </section>
     )
 }

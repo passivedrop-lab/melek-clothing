@@ -1,29 +1,27 @@
 "use client"
 
 import { useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 import { motion } from 'framer-motion'
-import { ChevronRight, ArrowLeft, ShoppingBag, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ShoppingBag, ShieldCheck, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import confetti from 'canvas-confetti'
 
-// Placeholder
 const PRODUCT_DATA: Record<string, any> = {
-    '1': { id: '1', name: 'Veste Vintage en Cuir', price: 85000, category: 'Homme', description: 'Une pièce unique des années 90, en cuir véritable d\'Italie. Parfaitement conservée avec une patine naturelle exceptionnelle. Une exclusivité Melek.', image_url: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504', gallery: ['https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504', 'https://images.unsplash.com/photo-1551028719-00167b16eac5'], sizes: ['M', 'L', 'XL'] },
-    '2': { id: '2', name: 'Robe en Soie Italienne', price: 45000, category: 'Femme', description: 'Légèreté et élégance absolue. Cette robe en soie sauvage offre une silhouette moderne et intemporelle.', image_url: 'https://images.unsplash.com/photo-1539109132314-34a936699561', sizes: ['S', 'M'] },
+    '1': { id: '1', name: 'Veste Vintage en Cuir', price: 85000, category: 'Homme Heritage', description: 'Une pièce rare des années 90, en cuir véritable d\'Italie. Sa patine naturelle témoigne d\'un passé noble. Un veston qui transcende les époques.', image_url: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504', gallery: ['https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504', 'https://images.unsplash.com/photo-1551028719-00167b16eac5'], sizes: ['M', 'L', 'XL'] },
+    '2': { id: '2', name: 'Robe en Soie Italienne', price: 45000, category: 'Femme Elégance', description: 'Fluidité et délicatesse pour cette robe en soie sauvage. Un tombé impeccable qui sublime la silhouette féminine avec une grace infinie.', image_url: 'https://images.unsplash.com/photo-1539109132314-34a936699561', sizes: ['S', 'M'] },
 }
 
 export default function ProductPage() {
     const { id } = useParams()
-    const router = useRouter()
     const { addToCart } = useCart()
     const [selectedSize, setSelectedSize] = useState('')
     const [activeImage, setActiveImage] = useState(0)
 
     const product = PRODUCT_DATA[id as string]
 
-    if (!product) return <div className="pt-40 text-center">Produit non trouvé</div>
+    if (!product) return <div className="pt-40 text-center font-serif italic">Cette pièce s'est évaporée...</div>
 
     const formatPrice = (p: number) => {
         return new Intl.NumberFormat('fr-BJ', {
@@ -35,7 +33,7 @@ export default function ProductPage() {
 
     const handleAddToCart = () => {
         if (!selectedSize) {
-            alert("Veuillez sélectionner une taille")
+            alert("La distinction exige une taille. Veuillez en choisir une.")
             return
         }
 
@@ -48,40 +46,41 @@ export default function ProductPage() {
         })
 
         confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#D4AF37', '#ffffff', '#000000']
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.5 },
+            colors: ['#B8860B', '#ffffff', '#000000']
         })
     }
 
     return (
-        <div className="pt-32 pb-20">
+        <div className="pt-40 pb-40 bg-melek">
             <div className="container">
-                <Link href="/boutique" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted hover:text-white mb-12 transition-colors">
-                    <ArrowLeft size={14} />
-                    Retour à la boutique
+                <Link href="/boutique" className="inline-flex items-center gap-4 text-xs-caps text-muted hover:text-white mb-20 transition-colors group">
+                    <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                    Retour au catalogue
                 </Link>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    {/* Gallery */}
-                    <div className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-32">
+                    {/* Visual Presentation */}
+                    <div className="space-y-10">
                         <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="aspect-[3/4] bg-secondary overflow-hidden"
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1.2 }}
+                            className="aspect-[3/4] bg-secondary overflow-hidden shadow-2xl"
                         >
                             <img
-                                src={product.image_url}
+                                src={[product.image_url, ...(product.gallery || [])][activeImage]}
                                 alt={product.name}
                                 className="w-full h-full object-cover"
                             />
                         </motion.div>
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="flex gap-4">
                             {[product.image_url, ...(product.gallery || [])].map((img, i) => (
                                 <button
                                     key={i}
-                                    className={`aspect-square bg-secondary border-2 transition-all ${activeImage === i ? 'border-accent' : 'border-transparent'}`}
+                                    className={`w-24 aspect-[3/4] bg-secondary border transition-all grayscale opacity-50 hover:opacity-100 ${activeImage === i ? 'border-accent opacity-100 grayscale-0' : 'border-transparent'}`}
                                     onClick={() => setActiveImage(i)}
                                 >
                                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -90,30 +89,27 @@ export default function ProductPage() {
                         </div>
                     </div>
 
-                    {/* Details */}
+                    {/* Editorial Content */}
                     <div className="flex flex-col">
-                        <div className="mb-8">
-                            <p className="text-accent uppercase tracking-[0.3em] text-[10px] font-bold mb-4">{product.category}</p>
-                            <h1 className="text-4xl md:text-5xl mb-4">{product.name}</h1>
-                            <p className="text-2xl font-serif text-white/90">{formatPrice(product.price)}</p>
-                        </div>
+                        <header className="mb-12">
+                            <p className="text-xs-caps text-accent mb-6">Pièces de Distinction</p>
+                            <h1 className="text-5xl md:text-7xl mb-6">{product.name}</h1>
+                            <p className="text-3xl font-serif italic text-white/80">{formatPrice(product.price)}</p>
+                        </header>
 
-                        <div className="mb-10 text-muted leading-loose text-sm">
+                        <div className="mb-16 text-muted leading-loose font-light tracking-wide first-letter:text-4xl first-letter:font-serif first-letter:mr-2">
                             <p>{product.description}</p>
                         </div>
 
-                        {/* Size selection */}
-                        <div className="mb-12">
-                            <div className="flex justify-between items-center mb-4">
-                                <span className="text-[10px] uppercase tracking-widest font-bold">Choisir la Taille</span>
-                                <span className="text-[10px] uppercase tracking-widest text-muted">Guide des tailles</span>
-                            </div>
-                            <div className="flex flex-wrap gap-3">
+                        {/* Selection */}
+                        <div className="mb-16">
+                            <h3 className="text-xs-caps mb-8 font-bold">Sélection de la mesure</h3>
+                            <div className="flex flex-wrap gap-4">
                                 {product.sizes.map((size: string) => (
                                     <button
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
-                                        className={`w-14 h-14 flex items-center justify-center border transition-all text-xs ${selectedSize === size ? 'bg-white text-black border-white' : 'border-white/10 hover:border-white/30'
+                                        className={`w-16 h-16 flex items-center justify-center border transition-all text-xs font-bold ${selectedSize === size ? 'bg-white text-black border-white' : 'border-white/10 hover:border-white/30'
                                             }`}
                                     >
                                         {size}
@@ -124,28 +120,20 @@ export default function ProductPage() {
 
                         <button
                             onClick={handleAddToCart}
-                            className="btn-premium w-full py-5 text-sm mb-8"
+                            className="btn-melek w-full py-6 text-xs mb-12 flex items-center justify-center gap-4"
                         >
-                            <ShoppingBag size={18} />
-                            Ajouter au panier
+                            <ShoppingBag size={18} strokeWidth={1} />
+                            <span>Acquérir cette pièce</span>
                         </button>
 
-                        <div className="grid grid-cols-2 gap-4 py-8 border-t border-white/5">
-                            <div className="flex items-center gap-3">
+                        <div className="space-y-6 pt-12 border-t border-white/5">
+                            <div className="flex items-center gap-4 group">
                                 <ShieldCheck size={20} className="text-accent" />
-                                <div>
-                                    <p className="text-[10px] uppercase tracking-widest font-bold">Qualité Certifiée</p>
-                                    <p className="text-[9px] text-muted uppercase tracking-widest">Pièce authentifiée</p>
-                                </div>
+                                <p className="text-xs-caps text-muted group-hover:text-white transition-colors">Certification d'Authénticité Melek</p>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-5 h-5 bg-accent/20 flex items-center justify-center rounded-full">
-                                    <ChevronRight size={12} className="text-accent" />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] uppercase tracking-widest font-bold">Livraison Rapide</p>
-                                    <p className="text-[9px] text-muted uppercase tracking-widest">Partout au Bénin</p>
-                                </div>
+                            <div className="flex items-center gap-4 group">
+                                <ChevronRight size={20} className="text-accent" />
+                                <p className="text-xs-caps text-muted group-hover:text-white transition-colors">Expédition sécurisée sous 24h</p>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,7 @@
 "use client"
 
-import Image from 'next/image'
-import Link from 'next/link'
 import { Plus } from 'lucide-react'
+import Link from 'next/link'
 
 interface Product {
     id: string
@@ -10,11 +9,9 @@ interface Product {
     price: number
     category: string
     image_url: string
-    sizes?: string[]
 }
 
 export default function ProductCard({ product }: { product: Product }) {
-    // Format price for Benin (FCFA)
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('fr-BJ', {
             style: 'currency',
@@ -24,31 +21,32 @@ export default function ProductCard({ product }: { product: Product }) {
     }
 
     return (
-        <div className="product-card group">
+        <div className="card-melek group">
             <Link href={`/produit/${product.id}`} className="block">
-                <div className="image-container relative bg-secondary overflow-hidden">
+                <div className="card-melek-image relative">
                     <img
                         src={product.image_url}
                         alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
                     />
-                    {/* Quick add button */}
-                    <button className="absolute bottom-4 right-4 w-10 h-10 bg-white text-black flex items-center justify-center opacity-0 translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 hover:bg-accent">
-                        <Plus size={20} />
+                    {/* Subtle Overlay */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+
+                    {/* Direct Add */}
+                    <button className="absolute top-6 right-6 w-12 h-12 bg-white text-black opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-accent focus:outline-none flex items-center justify-center">
+                        <Plus size={18} />
                     </button>
                 </div>
             </Link>
 
-            <div className="info">
-                <div className="flex justify-between items-start mb-1">
-                    <p className="text-[10px] uppercase tracking-widest text-muted">{product.category}</p>
-                </div>
+            <div className="flex flex-col items-center text-center">
+                <span className="text-xs-caps text-accent mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700">{product.category}</span>
                 <Link href={`/produit/${product.id}`}>
-                    <h4 className="text-sm font-medium tracking-wide mb-2 hover:text-accent transition-colors">
+                    <h4 className="text-sm font-light tracking-[0.15em] uppercase mb-3 hover:text-accent transition-colors">
                         {product.name}
                     </h4>
                 </Link>
-                <p className="text-sm font-serif">{formatPrice(product.price)}</p>
+                <p className="text-xs font-serif italic text-muted tracking-widest">{formatPrice(product.price)}</p>
             </div>
         </div>
     )

@@ -3,9 +3,8 @@
 import { useState } from 'react'
 import ProductCard from '@/components/ui/ProductCard'
 import { motion } from 'framer-motion'
-import { Search, Filter } from 'lucide-react'
+import { Search } from 'lucide-react'
 
-// Placeholder for now
 const ALL_PRODUCTS = [
     { id: '1', name: 'Veste Vintage en Cuir', price: 85000, category: 'Homme', image_url: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504' },
     { id: '2', name: 'Robe en Soie Italienne', price: 45000, category: 'Femme', image_url: 'https://images.unsplash.com/photo-1539109132314-34a936699561' },
@@ -28,21 +27,27 @@ export default function BoutiquePage() {
     })
 
     return (
-        <div className="pt-32 pb-20">
+        <div className="pt-48 pb-40 min-h-screen bg-melek">
             <div className="container">
-                <header className="mb-16">
-                    <h1 className="text-4xl md:text-6xl mb-4">La Boutique</h1>
-                    <p className="text-muted uppercase tracking-widest text-xs">Explorez notre univers selectionné</p>
+                <header className="mb-32 text-center lg:text-left">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                    >
+                        <h1 className="text-6xl md:text-[8rem] leading-none mb-8">La Curathèque.</h1>
+                        <p className="text-xs-caps text-muted">Exploration esthétique de pièces uniques.</p>
+                    </motion.div>
                 </header>
 
-                {/* Filters & Search */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12 py-6 border-y border-white/5">
-                    <div className="flex flex-wrap gap-4">
+                {/* Filters & Search - Minimal Edition */}
+                <div className="flex flex-col lg:flex-row justify-between items-center gap-10 mb-20 pb-10 border-b border-white/5">
+                    <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
                         {CATEGORIES.map((cat) => (
                             <button
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
-                                className={`text-[10px] uppercase tracking-widest px-4 py-2 border transition-all ${selectedCategory === cat ? 'bg-white text-black border-white' : 'border-white/10 hover:border-white/30'
+                                className={`text-xs-caps transition-all pb-2 border-b-2 ${selectedCategory === cat ? 'border-accent text-white' : 'border-transparent text-muted hover:text-white'
                                     }`}
                             >
                                 {cat}
@@ -50,26 +55,26 @@ export default function BoutiquePage() {
                         ))}
                     </div>
 
-                    <div className="relative w-full md:w-64">
-                        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                    <div className="relative w-full lg:w-80">
+                        <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted" />
                         <input
                             type="text"
-                            placeholder="RECHERCHER..."
+                            placeholder="QUÊTE D'UNE PIÈCE..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-secondary border-none px-10 py-3 text-[10px] tracking-widest uppercase focus:ring-1 focus:ring-accent outline-none"
+                            className="w-full bg-transparent border-b border-white/10 px-0 py-4 text-xs tracking-widest uppercase focus:border-accent outline-none transition-colors"
                         />
                     </div>
                 </div>
 
-                {/* Product Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+                {/* Product Grid - Wide Spacing */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-24">
                     {filteredProducts.map((product, index) => (
                         <motion.div
                             key={product.id}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                            transition={{ duration: 0.8, delay: index * 0.05 }}
                         >
                             <ProductCard product={product} />
                         </motion.div>
@@ -77,8 +82,8 @@ export default function BoutiquePage() {
                 </div>
 
                 {filteredProducts.length === 0 && (
-                    <div className="py-32 text-center opacity-40">
-                        <p className="text-xs uppercase tracking-widest">Aucun produit ne correspond à votre recherche</p>
+                    <div className="py-40 text-center text-muted italic">
+                        <p className="text-sm">L'exception que vous cherchez n'est pas encore ici.</p>
                     </div>
                 )}
             </div>
