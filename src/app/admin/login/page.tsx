@@ -2,16 +2,10 @@
 
 import { useState } from 'react'
 import Logo from '@/components/ui/Logo'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Eye, EyeOff, Lock, Mail, ArrowRight } from 'lucide-react'
-import Link from 'next/link'
-
-// Note: Metadata must be in a separate layout if using client component, 
-// or we use a separate server component for SEO. 
-// For now, focusing on the UI as requested.
+import { motion } from 'framer-motion'
+import { ArrowRight, Mail, Lock } from 'lucide-react'
 
 export default function AdminLoginPage() {
-    const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -23,108 +17,82 @@ export default function AdminLoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden">
-            {/* Background Aesthetic */}
-            <div className="absolute inset-0 opacity-20">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent/20 blur-[120px] rounded-full"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent/10 blur-[100px] rounded-full"></div>
-            </div>
-
+        <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-black overflow-hidden">
+            {/* Left Side: Editorial Image */}
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="w-full max-w-md relative z-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.5 }}
+                className="hidden lg:block relative"
             >
-                <div className="glass-dark border border-white/5 p-10 md:p-14 shadow-2xl relative">
-                    {/* Decorative Corner */}
-                    <div className="absolute top-0 right-0 w-16 h-16 border-t border-r border-accent/30 pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-16 h-16 border-b border-l border-accent/30 pointer-events-none"></div>
+                <div
+                    className="absolute inset-0 bg-cover bg-center grayscale opacity-60"
+                    style={{ backgroundImage: 'url("/admin-bg.jpg")' }}
+                ></div>
+                <div className="absolute inset-0 bg-black/40"></div>
 
-                    <div className="text-center mb-12">
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="flex justify-center mb-8"
-                        >
-                            <Logo />
-                        </motion.div>
+                <div className="absolute bottom-20 left-20 z-10">
+                    <Logo />
+                    <p style={{ marginTop: '2rem', fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.5em', opacity: 0.5 }}>
+                        Atelier de Curation • Melek Heritage
+                    </p>
+                </div>
+            </motion.div>
 
-                        <h1 style={{ fontFamily: 'Bodoni Moda', fontSize: '2rem', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-                            Authentification <span style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Prestige</span>
+            {/* Right Side: Couture Login Form */}
+            <div className="flex items-center justify-center p-8 md:p-20 relative">
+                <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    className="w-full max-w-sm"
+                >
+                    <div className="mb-16">
+                        <span className="text-accent text-[0.6rem] uppercase tracking-[0.4em] mb-4 block">Espace Réservé</span>
+                        <h1 style={{ fontFamily: 'Bodoni Moda', fontSize: '3rem', lineHeight: 1 }}>
+                            Accès <br /> <span className="serif-italic">Curateur</span>
                         </h1>
-                        <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.4em', opacity: 0.5 }}>
-                            Espace réservé aux curateurs Melek
-                        </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                        <div className="space-y-2">
-                            <label style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.7, fontWeight: 600 }}>Identifiant Email</label>
-                            <div className="relative border-b border-white/10 group focus-within:border-accent transition-colors duration-500">
-                                <Mail size={14} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors" />
-                                <input
-                                    type="email"
-                                    required
-                                    className="w-full bg-transparent px-8 py-4 text-xs font-light outline-none transition-all placeholder:opacity-20"
-                                    placeholder="curateur@melek-clothing.com"
-                                    style={{ fontFamily: 'Montserrat' }}
-                                />
-                            </div>
+                    <form onSubmit={handleSubmit} className="space-y-12">
+                        <div className="couture-group">
+                            <input
+                                type="email"
+                                required
+                                className="couture-input"
+                                placeholder="IDENTIFIANT"
+                            />
+                            <label className="couture-label">Email professionnel</label>
                         </div>
 
-                        <div className="space-y-2">
-                            <label style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.7, fontWeight: 600 }}>Mot de Passe</label>
-                            <div className="relative border-b border-white/10 group focus-within:border-accent transition-colors duration-500">
-                                <Lock size={14} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors" />
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    required
-                                    className="w-full bg-transparent px-8 py-4 text-xs font-light outline-none transition-all placeholder:opacity-20"
-                                    placeholder="••••••••••••"
-                                    style={{ fontFamily: 'Montserrat' }}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-0 top-1/2 -translate-y-1/2 text-muted hover:text-white transition-colors"
-                                >
-                                    {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
-                                </button>
-                            </div>
+                        <div className="couture-group">
+                            <input
+                                type="password"
+                                required
+                                className="couture-input"
+                                placeholder="MOT DE PASSE"
+                            />
+                            <label className="couture-label">Clé de sécurité</label>
                         </div>
 
-                        <div className="pt-4">
+                        <div className="pt-8">
                             <button
                                 disabled={loading}
-                                className="w-full py-5 bg-white text-black text-[0.7rem] font-bold uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 relative group overflow-hidden"
+                                className="couture-btn w-full"
                             >
-                                <span className="relative z-10 flex items-center justify-center gap-2">
-                                    {loading ? "Vérification..." : "Accéder à l'Empire"}
-                                    {!loading && <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />}
-                                </span>
+                                {loading ? "Vérification..." : "Entrer dans l'Atelier"}
+                                {!loading && <ArrowRight size={16} />}
                             </button>
                         </div>
                     </form>
 
-                    <div className="mt-12 text-center space-y-4">
-                        <Link
-                            href="/admin/register"
-                            className="text-[0.6rem] uppercase tracking-widest text-muted hover:text-accent transition-colors block"
-                        >
-                            Rejoindre l'élite • Créer un compte
-                        </Link>
-
-                        <div className="pt-8 opacity-20">
-                            <div className="h-[1px] w-12 bg-white/50 mx-auto mb-4"></div>
-                            <p style={{ fontSize: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5em' }}>
-                                Melek Clothing • Heritage Excellence
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
+                    <footer className="mt-20 opacity-20">
+                        <p style={{ fontSize: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.3em' }}>
+                            © 2026 Melek Clothing • Excellence en Afrique
+                        </p>
+                    </footer>
+                </motion.div>
+            </div>
         </div>
     )
 }
