@@ -3,11 +3,10 @@
 import { useState } from 'react'
 import Logo from '@/components/ui/Logo'
 import { motion } from 'framer-motion'
-import { Eye, EyeOff, Lock, Mail, User, ArrowRight } from 'lucide-react'
+import { ArrowRight, Mail, Lock, User } from 'lucide-react'
 import Link from 'next/link'
 
 export default function AdminRegisterPage() {
-    const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -19,113 +18,93 @@ export default function AdminRegisterPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden">
-            {/* Background Aesthetic */}
-            <div className="absolute inset-0 opacity-20">
-                <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-accent/20 blur-[150px] rounded-full"></div>
-                <div className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[50%] bg-accent/10 blur-[120px] rounded-full"></div>
-            </div>
-
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="w-full max-w-md relative z-10"
-            >
-                <div className="glass-dark border border-white/5 p-10 md:p-14 shadow-2xl relative">
-                    {/* Decorative Corner */}
-                    <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-accent/30 pointer-events-none"></div>
-                    <div className="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-accent/30 pointer-events-none"></div>
-
-                    <div className="text-center mb-12">
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="flex justify-center mb-8"
-                        >
-                            <Logo />
-                        </motion.div>
-
-                        <h1 style={{ fontFamily: 'Bodoni Moda', fontSize: '2rem', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-                            Rejoindre <span style={{ fontStyle: 'italic', color: 'var(--accent)' }}>l'Élite</span>
+        <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-black overflow-hidden">
+            {/* Left Side: Register Layout */}
+            <div className="flex items-center justify-center p-8 md:p-20 relative order-2 lg:order-1">
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    className="w-full max-w-sm"
+                >
+                    <div className="mb-16">
+                        <span className="text-accent text-[0.6rem] uppercase tracking-[0.4em] mb-4 block">Héritage Melek</span>
+                        <h1 style={{ fontFamily: 'Bodoni Moda', fontSize: '3rem', lineHeight: 1 }}>
+                            Rejoindre <br /> <span className="serif-italic">l'Empire</span>
                         </h1>
-                        <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.4em', opacity: 0.5 }}>
-                            Création de compte administrateur Melek
-                        </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-2">
-                            <label style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.7, fontWeight: 600 }}>Nom de l'Administrateur</label>
-                            <div className="relative border-b border-white/10 group focus-within:border-accent transition-colors duration-500">
-                                <User size={14} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors" />
-                                <input
-                                    type="text"
-                                    required
-                                    className="w-full bg-transparent px-8 py-4 text-xs font-light outline-none transition-all placeholder:opacity-20"
-                                    placeholder="Nom complet"
-                                    style={{ fontFamily: 'Montserrat' }}
-                                />
-                            </div>
+                    <form onSubmit={handleSubmit} className="space-y-12">
+                        <div className="couture-group">
+                            <input
+                                type="text"
+                                required
+                                className="couture-input"
+                                placeholder="IDENTITÉ"
+                            />
+                            <label className="couture-label">Nom complet du curateur</label>
                         </div>
 
-                        <div className="space-y-2">
-                            <label style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.7, fontWeight: 600 }}>Email Professionnel</label>
-                            <div className="relative border-b border-white/10 group focus-within:border-accent transition-colors duration-500">
-                                <Mail size={14} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors" />
-                                <input
-                                    type="email"
-                                    required
-                                    className="w-full bg-transparent px-8 py-4 text-xs font-light outline-none transition-all placeholder:opacity-20"
-                                    placeholder="admin@melek-clothing.com"
-                                    style={{ fontFamily: 'Montserrat' }}
-                                />
-                            </div>
+                        <div className="couture-group">
+                            <input
+                                type="email"
+                                required
+                                className="couture-input"
+                                placeholder="EMAIL PROFESSIONNEL"
+                            />
+                            <label className="couture-label">Identifiant de connexion</label>
                         </div>
 
-                        <div className="space-y-2">
-                            <label style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.7, fontWeight: 600 }}>Clé de Sécurité</label>
-                            <div className="relative border-b border-white/10 group focus-within:border-accent transition-colors duration-500">
-                                <Lock size={14} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors" />
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    required
-                                    className="w-full bg-transparent px-8 py-4 text-xs font-light outline-none transition-all placeholder:opacity-20"
-                                    placeholder="••••••••••••"
-                                    style={{ fontFamily: 'Montserrat' }}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-0 top-1/2 -translate-y-1/2 text-muted hover:text-white transition-colors"
-                                >
-                                    {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
-                                </button>
-                            </div>
+                        <div className="couture-group">
+                            <input
+                                type="password"
+                                required
+                                className="couture-input"
+                                placeholder="CLÉ DE SÉCURITÉ"
+                            />
+                            <label className="couture-label">Mot de passe haute protection</label>
                         </div>
 
-                        <div className="pt-4">
+                        <div className="pt-8">
                             <button
                                 disabled={loading}
-                                className="w-full py-5 bg-white text-black text-[0.7rem] font-bold uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 relative group overflow-hidden"
+                                className="couture-btn w-full"
                             >
-                                <span className="relative z-10 flex items-center justify-center gap-2">
-                                    {loading ? "Initialisation..." : "Établir la Connexion"}
-                                    {!loading && <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />}
-                                </span>
+                                {loading ? "Initialisation..." : "Créer mon Accès"}
+                                {!loading && <ArrowRight size={16} />}
                             </button>
                         </div>
                     </form>
 
-                    <div className="mt-12 text-center">
+                    <footer className="mt-16">
                         <Link
                             href="/admin/login"
-                            className="text-[0.6rem] uppercase tracking-widest text-muted hover:text-accent transition-colors inline-flex items-center gap-2"
+                            className="text-[0.6rem] uppercase tracking-[0.3em] text-muted hover:text-accent transition-colors"
                         >
-                            Déjà membre de l'empire
+                            Déjà membre de l'élite ? Se connecter
                         </Link>
-                    </div>
+                    </footer>
+                </motion.div>
+            </div>
+
+            {/* Right Side: Editorial Image */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.5 }}
+                className="hidden lg:block relative order-1 lg:order-2"
+            >
+                <div
+                    className="absolute inset-0 bg-cover bg-center grayscale opacity-60"
+                    style={{ backgroundImage: 'url("/register-bg.jpg")' }}
+                ></div>
+                <div className="absolute inset-0 bg-black/40"></div>
+
+                <div className="absolute top-20 right-20 text-right z-10">
+                    <Logo />
+                    <p style={{ marginTop: '2rem', fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.5em', opacity: 0.5 }}>
+                        Cotonou • Bénin • Heritage 2026
+                    </p>
                 </div>
             </motion.div>
         </div>

@@ -112,9 +112,19 @@ export default function NewProductPage() {
                         </div>
 
                         <div className="pt-12">
-                            <button disabled={loading} className="couture-btn" style={{ width: '100%', justifyContent: 'center' }}>
-                                {loading ? "Intégration..." : "Inscrire dans l'Héritage"}
-                                {!loading && <Plus size={16} />}
+                            <button
+                                disabled={loading}
+                                className="couture-btn group"
+                                style={{ width: '100%', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}
+                            >
+                                <motion.div
+                                    initial={false}
+                                    animate={loading ? { y: -20, opacity: 0 } : { y: 0, opacity: 1 }}
+                                    className="flex items-center gap-4"
+                                >
+                                    {loading ? "Intégration..." : "Inscrire dans l'Héritage"}
+                                    {!loading && <Plus size={16} className="group-hover:rotate-90 transition-transform duration-500" />}
+                                </motion.div>
                             </button>
                         </div>
                     </div>

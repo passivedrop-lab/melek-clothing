@@ -19,10 +19,10 @@ export default function AdminCategoriesPage() {
                     <h1 className="text-3xl font-serif mb-2">Gestion des Catégories</h1>
                     <p className="text-xs uppercase tracking-widest text-muted">Organisez votre catalogue par univers</p>
                 </div>
-                <button className="btn-premium">
+                <Link href="/admin/categories/nouveau" className="btn-premium">
                     <Plus size={16} />
                     Nouvelle Catégorie
-                </button>
+                </Link>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
