@@ -41,123 +41,149 @@ export default function NewProductPage() {
         <div className="min-h-screen bg-black text-white pb-20">
             <div className="couture-container">
                 {/* Header Section */}
-                <header className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 mb-20">
-                    <div className="max-w-2xl">
-                        <Link href="/admin/produits" className="flex items-center gap-2 text-[0.6rem] uppercase tracking-[0.4em] text-accent mb-8 hover:translate-x-[-10px] transition-transform">
-                            <ArrowLeft size={14} /> Revenir à la Galerie
+                <header className="py-24 flex flex-col md:flex-row md:items-end justify-between gap-12 border-b border-white/5 mb-24">
+                    <div className="max-w-3xl">
+                        <Link href="/admin/produits" className="flex items-center gap-3 text-[0.6rem] uppercase tracking-[0.5em] text-accent mb-10 hover:translate-x-[-10px] transition-all duration-500 ease-couture">
+                            <ArrowLeft size={14} /> Retour à l'Inventaire
                         </Link>
-                        <h1 style={{ fontFamily: 'Bodoni Moda', fontSize: '4rem', lineHeight: 0.9 }}>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1 }}
+                            className="text-6xl md:text-8xl font-serif leading-[0.85]"
+                        >
                             Atelier de <br /> <span className="serif-italic">Curation</span>
-                        </h1>
-                        <p style={{ marginTop: '2rem', fontSize: '0.8rem', opacity: 0.4, maxWidth: '400px', lineHeight: 1.6 }}>
-                            Intégrez une nouvelle pièce d'exception dans l'héritage Melek. Chaque détail définit l'excellence.
+                        </motion.h1>
+                        <p className="mt-8 text-[0.7rem] uppercase tracking-[0.3em] opacity-30 max-w-md leading-relaxed">
+                            Chaque pièce ajoutée définit l'excellence de la maison Melek. Organisez vos produits avec précision et élégance.
                         </p>
                     </div>
                 </header>
 
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-                    {/* Left Panel: Inputs */}
-                    <div className="lg:col-span-7 space-y-20">
-                        <div className="space-y-12">
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-24">
+                    {/* Left Panel: Detailed Form */}
+                    <div className="lg:col-span-7 space-y-24">
+
+                        {/* Section 1: Identité */}
+                        <section className="space-y-12">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-[0.5rem] bg-accent/10 text-accent px-3 py-1 tracking-widest">01</span>
+                                <h2 className="text-[0.6rem] uppercase tracking-[0.4em] opacity-50">Identité du Produit</h2>
+                            </div>
+
                             <div className="couture-group">
-                                <input type="text" required className="couture-input" placeholder="TITRE DE LA PIÈCE" />
-                                <label className="couture-label">Nom du produit (ex: Veste en Lin Sahara)</label>
+                                <input type="text" required className="couture-input" placeholder="DÉSIGNATION DE L'ARTICLE" />
+                                <label className="couture-label">Nom du produit</label>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                 <div className="couture-group">
                                     <select className="couture-input couture-select">
+                                        <option value="" disabled selected>UNIVERS</option>
                                         {CATEGORIES.map(cat => <option key={cat} value={cat.toLowerCase()}>{cat}</option>)}
                                     </select>
-                                    <label className="couture-label">Catégorie de Curation</label>
+                                    <label className="couture-label">Catégorie</label>
                                 </div>
                                 <div className="couture-group">
-                                    <input type="number" required className="couture-input" placeholder="PRIX (FCFA)" />
-                                    <label className="couture-label">Valeur de la pièce</label>
+                                    <input type="number" required className="couture-input" placeholder="PRIX DE VENTE (FCFA)" />
+                                    <label className="couture-label">Valeur unitaire</label>
                                 </div>
                             </div>
 
                             <div className="couture-group">
-                                <textarea rows={1} className="couture-input" placeholder="L'HISTOIRE DE CETTE PIÈCE" style={{ resize: 'none', height: 'auto' }} />
+                                <textarea
+                                    rows={3}
+                                    className="couture-input"
+                                    placeholder="RÉCIT ET MATÉRIAUX..."
+                                    style={{ resize: 'none' }}
+                                />
                                 <label className="couture-label">Description narrative</label>
                             </div>
-                        </div>
+                        </section>
 
-                        {/* Sizes Selection */}
-                        <div className="space-y-8">
-                            <h3 className="text-[0.6rem] uppercase tracking-[0.4em] opacity-40">Tailles Disponibles</h3>
-                            <div className="flex flex-wrap gap-4">
-                                {SIZES.map(size => (
-                                    <button
-                                        type="button"
-                                        key={size}
-                                        onClick={() => toggleSize(size)}
-                                        style={{
-                                            width: '60px',
-                                            height: '60px',
-                                            border: '1px solid',
-                                            borderColor: selectedSizes.includes(size) ? 'var(--accent)' : 'rgba(255,255,255,0.05)',
-                                            background: selectedSizes.includes(size) ? 'var(--accent)' : 'transparent',
-                                            color: selectedSizes.includes(size) ? 'black' : 'white',
-                                            fontSize: '0.7rem',
-                                            fontWeight: 700,
-                                            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                                        }}
-                                        className="hover:border-accent"
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
+                        {/* Section 2: Spécifications */}
+                        <section className="space-y-12">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-[0.5rem] bg-accent/10 text-accent px-3 py-1 tracking-widest">02</span>
+                                <h2 className="text-[0.6rem] uppercase tracking-[0.4em] opacity-50">Spécifications</h2>
                             </div>
-                        </div>
 
-                        <div className="pt-12">
+                            <div className="space-y-8">
+                                <h3 className="text-[0.5rem] uppercase tracking-[0.3em] opacity-40">Grille des Tailles</h3>
+                                <div className="flex flex-wrap gap-3">
+                                    {SIZES.map(size => (
+                                        <button
+                                            type="button"
+                                            key={size}
+                                            onClick={() => toggleSize(size)}
+                                            className={`w-14 h-14 border text-[0.6rem] font-bold transition-all duration-500 uppercase flex items-center justify-center ${selectedSizes.includes(size)
+                                                    ? 'border-accent bg-accent text-black'
+                                                    : 'border-white/5 bg-transparent text-white/40 hover:border-white/20'
+                                                }`}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Action Section */}
+                        <div className="pt-12 border-t border-white/5">
                             <button
                                 disabled={loading}
-                                className="couture-btn group"
-                                style={{ width: '100%', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}
+                                className="couture-btn group w-full md:w-auto"
                             >
                                 <motion.div
                                     initial={false}
                                     animate={loading ? { y: -20, opacity: 0 } : { y: 0, opacity: 1 }}
                                     className="flex items-center gap-4"
                                 >
-                                    {loading ? "Intégration..." : "Inscrire dans l'Héritage"}
-                                    {!loading && <Plus size={16} className="group-hover:rotate-90 transition-transform duration-500" />}
+                                    {loading ? "ARCHIVAGE..." : "FINALISER LA PIÈCE"}
+                                    {!loading && <Plus size={16} className="group-hover:rotate-90 transition-transform duration-700" />}
                                 </motion.div>
                             </button>
                         </div>
                     </div>
 
-                    {/* Right Panel: Image Upload Gallery */}
+                    {/* Right Panel: Curation Visuelle */}
                     <div className="lg:col-span-5">
-                        <div className="sticky top-40 space-y-8">
-                            <h3 className="text-[0.6rem] uppercase tracking-[0.4em] opacity-40">Galerie Visuelle</h3>
+                        <div className="sticky top-12 space-y-10">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-[0.5rem] bg-accent/10 text-accent px-3 py-1 tracking-widest">03</span>
+                                <h2 className="text-[0.6rem] uppercase tracking-[0.4em] opacity-50">Curation Visuelle</h2>
+                            </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-6">
                                 {images.map((img, i) => (
-                                    <div key={i} className="aspect-[3/4] bg-white/5 relative group overflow-hidden border border-white/5">
-                                        <img src={img} alt="" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        key={i}
+                                        className="aspect-[3/4] bg-white/[0.02] relative group overflow-hidden border border-white/5"
+                                    >
+                                        <img src={img} alt="" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" />
                                         <button
                                             type="button"
                                             onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}
-                                            className="absolute top-4 right-4 p-2 bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-all"
+                                            className="absolute top-4 right-4 p-2 bg-black/80 backdrop-blur-md text-white opacity-0 group-hover:opacity-100 transition-all duration-300"
                                         >
-                                            <X size={14} />
+                                            <X size={12} />
                                         </button>
-                                    </div>
+                                    </motion.div>
                                 ))}
 
-                                <label className="aspect-[3/4] border border-dashed border-white/10 flex flex-col items-center justify-center cursor-pointer hover:border-accent/40 hover:bg-white/5 transition-all group">
-                                    <Upload size={24} className="text-white/20 group-hover:text-accent transition-colors" />
-                                    <span className="mt-4 text-[0.5rem] uppercase tracking-[0.4em] text-white/20 group-hover:text-accent">Capturer</span>
+                                <label className="aspect-[3/4] border border-dashed border-white/10 flex flex-col items-center justify-center cursor-pointer hover:border-accent/40 hover:bg-white/[0.03] transition-all duration-700 group relative overflow-hidden">
+                                    <Upload size={20} className="text-white/10 group-hover:text-accent transition-all duration-500 group-hover:-translate-y-2" />
+                                    <span className="mt-4 text-[0.5rem] uppercase tracking-[0.4em] text-white/10 group-hover:text-accent">IMPORTER</span>
                                     <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                                 </label>
                             </div>
 
-                            <div className="pt-8 p-6 border border-white/5 bg-white/[0.02]">
-                                <p style={{ fontSize: '0.6rem', lineHeight: 2, opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.2em' }}>
-                                    Standard Melek : Ratio 3:4 • Haute Résolution • Fond Neutre de préférence.
+                            <div className="p-8 border border-white/5 bg-white/[0.01] space-y-4">
+                                <h4 className="text-[0.5rem] uppercase tracking-[0.2em] font-bold text-accent/60">Note de maison</h4>
+                                <p className="text-[0.6rem] leading-relaxed opacity-30 text-justify tracking-wide">
+                                    Pour une présentation optimale, privilégiez des clichés en haute résolution sur fond sobre. Le ratio recommandé est de 3:4.
                                 </p>
                             </div>
                         </div>

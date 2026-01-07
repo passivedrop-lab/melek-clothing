@@ -255,6 +255,122 @@ section {
   opacity: 0.7;
 }
 
+/* Couture Design System - Admin & Premium UI */
+.couture-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+@media (max-width: 768px) {
+  .couture-container {
+    padding: 0 1.5rem;
+  }
+}
+
+.couture-group {
+  position: relative;
+  width: 100%;
+}
+
+.couture-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: white;
+  letter-spacing: 0.1em;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.couture-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  font-size: 0.7rem;
+}
+
+.couture-input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.couture-label {
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  opacity: 0.5;
+  transition: all 0.5s ease;
+}
+
+.couture-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.couture-btn {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: white;
+  color: black;
+  padding: 1.5rem 2.5rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid white;
+}
+
+.couture-btn:hover {
+  background: transparent;
+  color: white;
+  padding-left: 3rem;
+  padding-right: 2rem;
+}
+
+.couture-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.bg-secondary\/30 {
+  background-color: rgba(17, 17, 17, 0.3);
+}
+
+.btn-premium {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.btn-premium:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
 /* Utilities */
 .text-accent {
   color: var(--accent);
