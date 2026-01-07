@@ -21,7 +21,8 @@ export default function RootLayout({
           <main>{children}</main>
           <footer className="py-20 border-t border-white/5 text-center">
             <div className="container">
-              <p className="text-xs uppercase tracking-widest text-muted">© 2026 Melek Clothing. Tous droits réservés.</p>
+              <p className="text-xs uppercase tracking-widest text-muted mb-4">Livraison partout au Bénin — Basé à Cotonou</p>
+              <p className="text-xs uppercase tracking-widest text-muted opacity-50">© 2026 Melek Clothing. Tous droits réservés.</p>
             </div>
           </footer>
         </CartProvider>

@@ -2,37 +2,67 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import ProductCard from '../ui/ProductCard'
-
-const FEATURED_PRODUCTS = [
-    { id: '1', name: 'Veste Vintage en Cuir', price: 85000, category: 'Homme Heritage', image_url: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=600&auto=format&fit=crop' },
-    { id: '2', name: 'Robe en Soie Italienne', price: 45000, category: 'Femme Elégance', image_url: 'https://images.unsplash.com/photo-1539109132314-34a936699561?q=80&w=600&auto=format&fit=crop' },
-    { id: '3', name: 'Pantalon Classique Noir', price: 25000, category: 'Essentiels', image_url: 'https://images.unsplash.com/photo-1624371414361-e6e0ea2c652c?q=80&w=600&auto=format&fit=crop' },
-    { id: '4', name: 'Sac à Main de Luxe', price: 120000, category: 'Accessoires', image_url: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=600&auto=format&fit=crop' }
-]
 
 export default function FeaturedProducts() {
+    // Empty state for products as requested by user
+    const products = []
+
     return (
-        <section>
+        <section style={{ position: 'relative', overflow: 'hidden' }}>
             <div className="container">
-                <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                    <h2 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5em', color: 'var(--accent)', marginBottom: '1rem' }}>
-                        Sélection de Saison
-                    </h2>
-                    <h3 style={{ fontSize: '3.5rem' }}>
-                        Les Pièces <span className="serif-italic">Iconiques</span>
-                    </h3>
+                <div style={{ textAlign: 'center', marginBottom: '8rem' }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                    >
+                        <h2 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5em', color: 'var(--accent)', marginBottom: '1.5rem' }}>
+                            Curations de Saison
+                        </h2>
+                        <h3 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)' }}>
+                            Les Pièces <span className="serif-italic">Iconiques</span>
+                        </h3>
+                    </motion.div>
                 </div>
 
-                <div className="product-grid">
-                    {FEATURED_PRODUCTS.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
+                {products.length === 0 ? (
+                    <div style={{
+                        padding: '10rem 2rem', border: '1px solid var(--border)',
+                        textAlign: 'center', background: 'rgba(255,255,255,0.02)',
+                        position: 'relative', overflow: 'hidden'
+                    }}>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1.5 }}
+                            style={{ zIndex: 10, position: 'relative' }}
+                        >
+                            <p style={{ fontSize: '1.5rem', fontFamily: 'Bodoni Moda', fontStyle: 'italic', marginBottom: '2rem', opacity: 0.8 }}>
+                                "Le luxe est une affaire de patience et de choix."
+                            </p>
+                            <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.3em', opacity: 0.5, maxWidth: '500px', margin: '0 auto' }}>
+                                Nos prochaines sélections sont en cours d'expertise. <br />
+                                L'excellence ne se précipite pas.
+                            </p>
+                        </motion.div>
 
-                <div style={{ textAlign: 'center', marginTop: '5rem' }}>
-                    <Link href="/boutique" className="serif-italic" style={{ borderBottom: '1px solid var(--accent)', paddingBottom: '0.5rem', opacity: 0.8 }}>
-                        Voir tout le catalogue
+                        {/* Background Texture for Empty State */}
+                        <div style={{
+                            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                            backgroundImage: 'radial-gradient(circle at center, rgba(184, 134, 11, 0.05) 0%, transparent 70%)',
+                            zIndex: 1
+                        }}></div>
+                    </div>
+                ) : (
+                    <div className="product-grid">
+                        {/* Logic for 5 articles per category will go here when products are added */}
+                    </div>
+                )}
+
+                <div style={{ textAlign: 'center', marginTop: '6rem' }}>
+                    <Link href="/boutique" className="btn-outline" style={{ padding: '1.2rem 3rem' }}>
+                        Consulter la Curathèque
                     </Link>
                 </div>
             </div>
