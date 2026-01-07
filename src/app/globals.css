@@ -210,12 +210,36 @@ section {
   position: fixed;
 }
 
+.top-0 {
+  top: 0;
+}
+
+.left-0 {
+  left: 0;
+}
+
+.right-0 {
+  right: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
 .inset-0 {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
+
+.-inset-4 {
+  top: -1rem;
+  right: -1rem;
+  bottom: -1rem;
+  left: -1rem;
+}
+
 
 .z-0 {
   z-index: 0;
@@ -358,6 +382,62 @@ section {
   width: fit-content;
 }
 
+.w-3\.5 {
+  width: 0.875rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
+.w-24 {
+  width: 6rem;
+}
+
+.w-40 {
+  width: 10rem;
+}
+
+.w-80 {
+  width: 20rem;
+}
+
+.h-1 {
+  height: 0.25rem;
+}
+
+.h-3\.5 {
+  height: 0.875rem;
+}
+
+.h-12 {
+  height: 3rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.h-20 {
+  height: 5rem;
+}
+
+.h-24 {
+  height: 6rem;
+}
+
+.h-40 {
+  height: 10rem;
+}
+
 .h-full {
   height: 100%;
 }
@@ -369,6 +449,7 @@ section {
 .min-h-screen {
   min-height: 100vh;
 }
+
 
 /* Spacing */
 .mt-0 {
