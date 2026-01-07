@@ -1,100 +1,77 @@
 "use client"
 
 import { useState } from 'react'
-import ProductCard from '@/components/ui/ProductCard'
 import { motion } from 'framer-motion'
-import { Search } from 'lucide-react'
-
-const ALL_PRODUCTS = [
-    { id: '1', name: 'Veste Vintage en Cuir', price: 85000, category: 'Homme', image_url: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504' },
-    { id: '2', name: 'Robe en Soie Italienne', price: 45000, category: 'Femme', image_url: 'https://images.unsplash.com/photo-1539109132314-34a936699561' },
-    { id: '3', name: 'Pantalon Classique Noir', price: 25000, category: 'Pantalons', image_url: 'https://images.unsplash.com/photo-1624371414361-e6e0ea2c652c' },
-    { id: '4', name: 'Sac à Main de Luxe', price: 120000, category: 'Accessoires', image_url: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa' },
-    { id: '5', name: 'Chemise à Motifs Silk', price: 32000, category: 'Homme', image_url: 'https://images.unsplash.com/photo-1598033129183-c4f50c7176c8' },
-    { id: '6', name: 'Jupe Plissée Vintage', price: 28000, category: 'Femme', image_url: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-]
-
-const CATEGORIES = ['Tous', 'Homme', 'Femme', 'Accessoires', 'Pantalons', 'Jeans']
+import { Search, Info } from 'lucide-react'
 
 export default function BoutiquePage() {
-    const [selectedCategory, setSelectedCategory] = useState('Tous')
     const [searchQuery, setSearchQuery] = useState('')
 
-    const filteredProducts = ALL_PRODUCTS.filter(product => {
-        const matchesCategory = selectedCategory === 'Tous' || product.category === selectedCategory
-        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase())
-        return matchesCategory && matchesSearch
-    })
-
     return (
-        <div style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
-            <div className="container">
+        <div style={{ paddingTop: '10rem', paddingBottom: '10rem', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <div className="container" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <header style={{ textAlign: 'center', marginBottom: '8rem' }}>
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1 }}
+                        transition={{ duration: 1.2 }}
                     >
                         <h1 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', marginBottom: '1.5rem' }}>La Curathèque.</h1>
-                        <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.4em', color: 'var(--accent)' }}>
-                            Exploration esthétique de pièces uniques.
+                        <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5em', color: 'var(--accent)' }}>
+                            L'Art de la Curation Héritage
                         </p>
                     </motion.div>
                 </header>
 
-                {/* Filters & Search */}
+                {/* Sublime Empty State */}
                 <div style={{
-                    display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
-                    alignItems: 'center', gap: '2rem', marginBottom: '5rem',
-                    paddingBottom: '2rem', borderBottom: '1px solid var(--border)'
+                    flex: 1, display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', justifyContent: 'center', textAlign: 'center',
+                    position: 'relative'
                 }}>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
-                        {CATEGORIES.map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => setSelectedCategory(cat)}
-                                style={{
-                                    fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.2em',
-                                    paddingBottom: '0.5rem', borderBottom: '2px solid',
-                                    borderColor: selectedCategory === cat ? 'var(--accent)' : 'transparent',
-                                    color: selectedCategory === cat ? 'white' : 'var(--muted)',
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                {cat}
-                            </button>
-                        ))}
-                    </div>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.1 }}
+                        transition={{ duration: 2 }}
+                        style={{
+                            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                            width: '100%', maxWidth: '800px', pointerEvents: 'none', zIndex: -1
+                        }}
+                    >
+                        <img src="/hero-prestige.png" alt="" style={{ width: '100%', filter: 'grayscale(100%) blur(10px)' }} />
+                    </motion.div>
 
-                    <div style={{ position: 'relative', width: '300px' }}>
-                        <Search size={14} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', opacity: 0.3 }} />
+                    <div style={{ maxWidth: '600px', zIndex: 10 }}>
+                        <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem', fontStyle: 'italic' }}>Une Sélection <span className="text-accent">Souveraine</span> se Prépare.</h2>
+                        <p style={{ fontSize: '1.2rem', fontFamily: 'Bodoni Moda', opacity: 0.6, lineHeight: '1.8', marginBottom: '4rem' }}>
+                            "La mode est ce que vous adoptez quand vous ne savez pas qui vous êtes." <br />
+                            <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.2em' }}>— Quentin Crisp</span>
+                        </p>
+
+                        <div style={{ height: '1px', width: '100px', background: 'var(--accent)', margin: '0 auto 4rem' }}></div>
+
+                        <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.4em', opacity: 0.8, maxWidth: '400px', margin: '0 auto' }}>
+                            Nos curateurs finalisent l'acquisition de pièces d'exception à Cotonou et Paris. Revenez sous peu pour l'ouverture de la Galerie.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Minimal Search for UX readiness */}
+                <div style={{
+                    marginTop: '8rem', maxWidth: '300px', marginInline: 'auto',
+                    borderBottom: '1px solid var(--border)', paddingBottom: '1rem',
+                    opacity: 0.3
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <Search size={14} />
                         <input
                             type="text"
-                            placeholder="RECHERCHER..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{
-                                width: '100%', background: 'none', border: 'none',
-                                borderBottom: '1px solid var(--border)', padding: '1rem 0',
-                                color: 'white', fontSize: '0.7rem', letterSpacing: '0.25em',
-                                outline: 'none'
-                            }}
+                            placeholder="RECHERCHER PLUS TARD..."
+                            disabled
+                            style={{ background: 'none', border: 'none', color: 'white', fontSize: '0.6rem', letterSpacing: '0.2em', outline: 'none' }}
                         />
                     </div>
                 </div>
-
-                {/* Product Grid */}
-                <div className="product-grid">
-                    {filteredProducts.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
-
-                {filteredProducts.length === 0 && (
-                    <div style={{ textAlign: 'center', padding: '10rem 0', opacity: 0.4, fontStyle: 'italic' }}>
-                        L'exception que vous cherchez n'est pas encore ici.
-                    </div>
-                )}
             </div>
         </div>
     )
