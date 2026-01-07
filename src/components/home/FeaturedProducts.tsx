@@ -13,38 +13,27 @@ const FEATURED_PRODUCTS = [
 
 export default function FeaturedProducts() {
     return (
-        <section className="bg-background relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-secondary/50 -skew-x-12 translate-x-1/2 pointer-events-none" />
-
-            <div className="container relative z-10">
-                <div className="flex flex-col md:flex-row justify-between items-baseline mb-24 gap-8">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                    >
-                        <h2 className="text-xs-caps text-accent mb-6">Sélection Curatée</h2>
-                        <h3 className="text-5xl md:text-7xl">Les Pièces <br /><span className="italic font-light">Maîtresses</span></h3>
-                    </motion.div>
-                    <Link href="/boutique" className="text-xs-caps border-b border-white/20 pb-2 hover:border-white transition-all">
-                        Explorer tout le catalogue
-                    </Link>
+        <section>
+            <div className="container">
+                <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+                    <h2 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5em', color: 'var(--accent)', marginBottom: '1rem' }}>
+                        Sélection de Saison
+                    </h2>
+                    <h3 style={{ fontSize: '3.5rem' }}>
+                        Les Pièces <span className="serif-italic">Iconiques</span>
+                    </h3>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-20">
-                    {FEATURED_PRODUCTS.map((product, index) => (
-                        <motion.div
-                            key={product.id}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 0.8, delay: index * 0.1, ease: [0.25, 1, 0.5, 1] }}
-                        >
-                            <ProductCard product={product} />
-                        </motion.div>
+                <div className="product-grid">
+                    {FEATURED_PRODUCTS.map((product) => (
+                        <ProductCard key={product.id} product={product} />
                     ))}
+                </div>
+
+                <div style={{ textAlign: 'center', marginTop: '5rem' }}>
+                    <Link href="/boutique" className="serif-italic" style={{ borderBottom: '1px solid var(--accent)', paddingBottom: '0.5rem', opacity: 0.8 }}>
+                        Voir tout le catalogue
+                    </Link>
                 </div>
             </div>
         </section>
