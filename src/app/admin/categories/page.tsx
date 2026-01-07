@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Plus, Tag, Edit2, Trash2 } from 'lucide-react'
+import Link from 'next/link'
 
 const INITIAL_CATEGORIES = [
     { id: '1', name: 'Homme', slug: 'homme', count: 42 },
